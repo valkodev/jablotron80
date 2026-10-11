@@ -1,4 +1,4 @@
-# Deployment candidate 0.48.3
+# Deployment candidate 0.48.4
 
 This branch combines quiet detector operation, selectable common/personal codes,
 and optional encryption. Feature PRs are kept in separate branches. The zip contains
@@ -13,10 +13,14 @@ USB remains `/dev/jablotron`. The integration files go into
 `config/www/jablotron-user-code-card.js`.
 
 1. Back up the existing integration, HA config entries, and private PIN Store with
-   access restricted to the administrator. Do not edit `.storage` while HA runs.
+   access restricted to the administrator. Keep all backup copies outside
+   `custom_components`, for example under `/config/.jablotron80-backups`. HA scans
+   integration manifests in subdirectories, including hidden backup directories;
+   duplicate copies here can prevent the integration from loading. Do not edit
+   `.storage` while HA runs.
 2. Copy `custom_components/jablotron80` and the card to the corresponding HA config
    paths. Restart HA. Update the existing JavaScript module resource to
-   `/local/jablotron-user-code-card.js?v=0.48.3` and reload the browser.
+   `/local/jablotron-user-code-card.js?v=0.48.4` and reload the browser.
 3. Open integration options: select **personal** for this household and keep
    **Query detector activity** off. Existing personal codes remain assigned to
    their accounts; default installations retain common mode for compatibility.
@@ -34,7 +38,9 @@ whether storage is encrypted; config entry data should have `encrypted_credentia
 instead of `password`/`codes`, and personal Store records should contain tokens.
 Inspect only structure/field names, never print production values. Then a user may
 check A, AB, ABC and disarm while observing the real keypad and zone sensors.
-Earlier prototype hardware tests passed, but this candidate has not been deployed.
+Version 0.48.3 was deployed with encryption and personal codes; user-operated
+arming and disarming passed. Version 0.48.4 additionally restores manual detector
+queries while automatic queries are disabled.
 
 Changing modes or encrypting credentials does not itself send alarm commands.
 Read USER-CODES.md and ENCRYPTION.md before rotation, backup restoration or rollback.
