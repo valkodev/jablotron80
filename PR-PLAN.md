@@ -6,10 +6,10 @@ Base reviewed: d497cf17 (upstream version 0.48).
 
 | Branch | Commit | Proposed upstream base |
 | --- | --- | --- |
-| codex/optional-detector-queries | 6ee0165 | upstream main |
+| codex/optional-detector-queries | d0113d5 | upstream main |
 | codex/account-scoped-codes | 6027293 | upstream main |
 | codex/encrypted-codes | 08aa1dc | upstream main after account-scoped codes merge |
-| codex/deployment-0.48.3 | combined candidate | local deployment only |
+| codex/deployment-0.48.3 | combined 0.48.4 deployment | deployment only, not an upstream PR |
 
 The first two branches are independent children of the original main. The third
 builds on the second because it encrypts the personal-code Store as well as the
@@ -18,7 +18,9 @@ account-scoped codes to merge before opening the encryption PR against upstream
 main; otherwise that PR also contains the whole personal-code feature.
 The deployment branch combines the three features and bumps the local version;
 release/version changes are intentionally absent from the upstream feature PRs.
-No branches have been pushed and no GitHub PR has been opened by this task.
+The optional-detector-queries and deployment-0.48.3 branches have been pushed
+to the valkodev fork over SSH. Account-scoped-codes and encrypted-codes remain
+local. No upstream GitHub PR has been opened by this task.
 
 ## Push when ready
 
@@ -50,8 +52,12 @@ When a detector becomes active, background detail queries emulate keypad keys an
 can cause keypad beeps/activity displays. Add an option, enabled by default, to
 suppress those queries for alarm-only installations. Alarm status and A/AB/ABC
 commands keep working; detector states may be incomplete or stale when disabled.
-Validation: 11 targeted tests for detector activity, cumulative zone states,
-live option changes, and explicit arm/disarm/detail commands; Black check.
+The manual Query button remains usable when automatic queries are disabled.
+Documentation explains that inactive detector entities are not verified closed/clear
+states and that manual queries can also cause keypad sounds.
+Validation: 14 targeted tests for detector activity, cumulative zone states,
+live option changes, manual button requests (including pending-query handling),
+and explicit arm/disarm/detail commands; Black check.
 
 ## PR 2 draft
 
@@ -84,11 +90,13 @@ limits, interrupted migration, and downgrade recovery.
 Validation: real encryption, scope binding, tampering, key permissions/generation,
 rotation, migration and failed-write tests, options-flow tests, full pytest suite,
 frontend test, JSON parsing and Black check. HA interfaces are stubbed in tests;
-live deployment/startup/migration remains to be verified on production HA.
+Version 0.48.3 was deployed with encryption and personal mode; user-operated
+arming/disarming passed. Plaintext panel fields were confirmed absent from the
+config entry. The private personal Store is not readable by the SSH account.
 
 ## Combined candidate checks
 
-On `codex/deployment-0.48.3`: 149 pytest tests passed, Node card test passed,
+On `codex/deployment-0.48.3`: 152 pytest tests passed, Node card test passed,
 all integration Python files passed Black at line length 110, JSON and syntax
 validated. Tests require permission to start worker processes in this environment;
 sandboxed runs blocked in unchanged upstream retry tests, while the full run
