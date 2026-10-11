@@ -440,3 +440,13 @@ optional dashboard card, installation, and security limits.
 
 See [ENCRYPTION.md](ENCRYPTION.md) for optional encryption in either code mode,
 key provisioning on HA OS/Core/Docker, migration, backups and rollback.
+
+### Alarm-only operation
+
+Disable **Query detector activity** in integration options to suppress background
+queries that emulate keypad keys and can cause beeps/activity displays. The default
+is enabled. A/AB/ABC status and alarm commands remain available, but detector
+open/closed states may become stale. Panel-generated sounds are unaffected.
+
+For this deployment branch, see [DEPLOYMENT.md](DEPLOYMENT.md) and
+[PR-PLAN.md](PR-PLAN.md). The separate feature branches keep upstream PRs focused.
