@@ -430,3 +430,8 @@ docker run --rm   -v "$PWD:/src"   -w /src   pyfound/black:latest_release   blac
 ## Credits
 
 Thanks to [kukulich](https://github.com/kukulich/home-assistant-jablotron100), [fwpt](https://github.com/fwpt/HASS-Jablotron80-T/tree/master/custom_components/Jablotron80) and [mattsaxon](https://github.com/mattsaxon/HASS-Jablotron80) for figuring out Jablotron functionality and Home Assistant essentials.
+
+### Account-scoped disarm codes
+
+See [USER-CODES.md](USER-CODES.md) for the common/personal mode option,
+optional dashboard card, installation, and security limits.
